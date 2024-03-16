@@ -1,0 +1,31 @@
+import React from "react";
+import { Link } from "react-router-dom";
+import { FaArrowRight } from "react-icons/fa";
+const ServiceCard = ({ service }) => {
+  const { _id, title, img, price } = service;
+  return (
+    <div className="card  w-96 bg-base-100 shadow-xl">
+      <figure className="px-10 pt-10">
+        <img src={img} alt="Shoes" className="rounded-xl" />
+      </figure>
+      <div className=" justify-between card-body  ">
+        <div className="flex justify-between items-center">
+          <div>
+            {" "}
+            <h2 className="card-title">{title}</h2>
+            <p> {price}</p>
+          </div>
+          <div className="card-actions">
+            <Link>
+              <button className="btn btn-circle btn-outline bg-sky-700 text-white hover:bg-purple-500 ">
+                <FaArrowRight></FaArrowRight>
+              </button>
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ServiceCard;
