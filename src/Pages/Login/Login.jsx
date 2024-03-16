@@ -1,16 +1,42 @@
-import React from "react";
-import login from "../../assets/images/login/login.svg";
+import React, { useContext } from "react";
+import logimg from "../../assets/images/login/login.svg";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../providers/AuthProviders";
+import Swal from "sweetalert2";
 const Login = () => {
+  // ?
+  const { login } = useContext(AuthContext);
+
+  // ?
+  const handleLogin = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    const newUser = { email, password };
+    console.log(newUser);
+    login(email, password)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        Swal.fire({
+          title: "Sign Up Successfully",
+          text: "Coooooool",
+          icon: "success",
+        });
+        form.reset();
+      })
+      .catch((error) => console.log(error));
+  };
   return (
     <div className="hero min-h-screen -mt-14 bg-base-200">
       <div className="hero-content flex justify-between ">
         <div className=" w-1/2 mr-16 ">
-          <img src={login} alt="" />
+          <img src={logimg} alt="" />
         </div>
         <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
           {/* form */}
-          <form className="card-body">
+          <form onSubmit={handleLogin} className="card-body">
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Email</span>
