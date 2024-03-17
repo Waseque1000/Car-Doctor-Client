@@ -20,7 +20,7 @@ const Login = () => {
         const user = result.user;
         console.log(user);
         Swal.fire({
-          title: "Sign Up Successfully",
+          title: "log In Successfully",
           text: "Coooooool",
           icon: "success",
         });

@@ -31,9 +31,6 @@ const SignUp = () => {
   return (
     <div className="hero -mt-10 min-h-screen bg-base-200">
       <div className="hero-content flex justify-between ">
-        <div className=" w-1/2 mr-16 ">
-          <img src={login} alt="" />
-        </div>
         <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
           {/* form */}
           <form onSubmit={handleSighUp} className="card-body">
@@ -92,6 +89,9 @@ const SignUp = () => {
               Log in
             </Link>
           </p>
+        </div>
+        <div className=" w-1/2 mr-16 ">
+          <img src={login} alt="" />
         </div>
       </div>
     </div>
