@@ -9,13 +9,24 @@ const Bookings = () => {
   const [bookings, setBookings] = useState([]);
   const url = `http://localhost:5000/bookings?email=${user.email}`;
   useEffect(() => {
-    fetch(url)
+    fetch(url, {
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("car-access-token")}`,
+      },
+    })
       .then((res) => res.json())
       .then((data) => setBookings(data));
   }, [url]);
+
+  //`  ---------------
   // ! delete
   const handleDelete = (id) => {
-    const proceed = confirm("Are You Sure ?");
+    // const proceed = confirm("Are You Sure ?");
+    const proceed = Swal.fire({
+      title: "Are you sure ?",
+      icon: "question",
+    });
     console.log(id);
     if (proceed) {
       fetch(`http://localhost:5000/bookings/${id}`, {
@@ -24,16 +35,17 @@ const Bookings = () => {
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
+
+          if (data.deletedCount > 0) {
+            Swal.fire({
+              title: "Deleted Successful",
+              text: "Cool",
+              icon: "success",
+            });
+            const remaining = bookings.filter((booking) => booking._id !== id);
+            setBookings(remaining);
+          }
         });
-      if (data.deletedCount > 0) {
-        Swal.fire({
-          title: "Deleted Successful",
-          text: "Cool",
-          icon: "success",
-        });
-        const remaining = bookings.filter((booking) => booking._id !== id);
-        setBookings(remaining);
-      }
     }
   };
 

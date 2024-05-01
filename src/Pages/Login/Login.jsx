@@ -1,11 +1,16 @@
 import React, { useContext } from "react";
 import logimg from "../../assets/images/login/login.svg";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProviders";
 import Swal from "sweetalert2";
 const Login = () => {
   // ?
   const { login } = useContext(AuthContext);
+
+  const location = useLocation();
+  const Navigate = useNavigate();
+
+  const from = location.state?.from?.pathname || "/";
 
   // ?
   const handleLogin = (event) => {
@@ -18,7 +23,31 @@ const Login = () => {
     login(email, password)
       .then((result) => {
         const user = result.user;
+        //
+        const loggedUser = {
+          email: user.email,
+        };
         console.log(user);
+        fetch("http://localhost:5000/jwt", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(loggedUser),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log("jwt responce", data);
+
+            // TODO:  ai token ta local storage a set korte hbe ...
+            // ? and this is not the best way
+            // TODO:
+
+            localStorage.setItem("car-access-token", data.token);
+            Navigate(from, { replace: true });
+          });
+
+        // ? sweet alert
         Swal.fire({
           title: "log In Successfully",
           text: "Coooooool",
