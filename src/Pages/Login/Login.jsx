@@ -28,8 +28,10 @@ const Login = () => {
           email: user.email,
         };
         console.log(user);
+
+        // ! jot token ta hit koree jonno
         fetch("http://localhost:5000/jwt", {
-          method: "POST",
+          method: "POST ",
           headers: {
             "content-type": "application/json",
           },

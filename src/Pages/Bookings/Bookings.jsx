@@ -10,6 +10,7 @@ const Bookings = () => {
   const url = `http://localhost:5000/bookings?email=${user.email}`;
   useEffect(() => {
     fetch(url, {
+      //   ? token er kaj
       method: "GET",
       headers: {
         authorization: `Bearer ${localStorage.getItem("car-access-token")}`,
